@@ -1,0 +1,259 @@
+use contact
+switched to db contact
+contact> db.createCollection('contactlist')
+{ ok: 1 }
+contact> show collections
+contactlist
+contact> db.insertMany([
+...   {
+...     "lastName": "Ben",
+...     "firstName": "Morisah",
+...     "email": "ben@gmail.com",
+...     "age": 26
+...   },
+...   {
+...     "lastName": "Kefi",
+...     "firstName": "Seif",
+...     "email": "kefi@gmail.com",
+...     "age": 15
+...   },
+...   {
+...     "lastName": "Emilie",
+...     "firstName": "Brouahge",
+...     "email": "emilie.b@gmail.com",
+...     "age": 40
+...   },
+...   {
+...     "lastName": "Alexah",
+...     "firstName": "Brown",
+...     "age": 4
+...   },
+...   {
+...     "lastName": "ahDenzel",
+...     "firstName": "Washington",
+...     "age": 3
+...   }
+... ]
+... )
+TypeError: db.insertMany is not a function
+contact> db.contactlist.insertMany([
+...   {
+...     "lastName": "Ben",
+...     "firstName": "Morisah",
+...     "email": "ben@gmail.com",
+...     "age": 26
+...   },
+...   {
+...     "lastName": "Kefi",
+...     "firstName": "Seif",
+...     "email": "kefi@gmail.com",
+...     "age": 15
+...   },
+...   {
+...     "lastName": "Emilie",
+...     "firstName": "Brouahge",
+...     "email": "emilie.b@gmail.com",
+...     "age": 40
+...   },
+...   {
+...     "lastName": "Alexah",
+...     "firstName": "Brown",
+...     "age": 4
+...   },
+...   {
+...     "lastName": "ahDenzel",
+...     "firstName": "Washington",
+...     "age": 3
+...   }
+... ]
+... )
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('665775cc0a84b734a2cdcdf6'),
+    '1': ObjectId('665775cc0a84b734a2cdcdf7'),
+    '2': ObjectId('665775cc0a84b734a2cdcdf8'),
+    '3': ObjectId('665775cc0a84b734a2cdcdf9'),
+    '4': ObjectId('665775cc0a84b734a2cdcdfa')
+  }
+}
+contact> db.contactlist.find()
+[
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf6'),
+    lastName: 'Ben',
+    firstName: 'Morisah',
+    email: 'ben@gmail.com',
+    age: 26
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf7'),
+    lastName: 'Kefi',
+    firstName: 'Seif',
+    email: 'kefi@gmail.com',
+    age: 15
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf8'),
+    lastName: 'Emilie',
+    firstName: 'Brouahge',
+    email: 'emilie.b@gmail.com',
+    age: 40
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf9'),
+    lastName: 'Alexah',
+    firstName: 'Brown',
+    age: 4
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdfa'),
+    lastName: 'ahDenzel',
+    firstName: 'Washington',
+    age: 3
+  }
+]
+contact> db.contactlist.find({_id: ObjectId('665775cc0a84b734a2cdcdf9')}
+...
+contact> db.contactlist.find({_id: ObjectId('665775cc0a84b734a2cdcdf9')})
+[
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf9'),
+    lastName: 'Alexah',
+    firstName: 'Brown',
+    age: 4
+  }
+]
+contact> db.contactlist.find({age:{$gt:18}})
+[
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf6'),
+    lastName: 'Ben',
+    firstName: 'Morisah',
+    email: 'ben@gmail.com',
+    age: 26
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf8'),
+    lastName: 'Emilie',
+    firstName: 'Brouahge',
+    email: 'emilie.b@gmail.com',
+    age: 40
+  }
+]
+contact> db.contactlist.find({$and:[{age:{$gt:18}},{firstname:{$regex:'ah'}}]})
+
+contact> db.contactlist.find({$and:[{age:{$gt:18}},{firstname:{$regex:/ah/gi}}]})
+
+contact> db.contactlist.find()
+[
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf6'),
+    lastName: 'Ben',
+    firstName: 'Morisah',
+    email: 'ben@gmail.com',
+    age: 26
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf7'),
+    lastName: 'Kefi',
+    firstName: 'Seif',
+    email: 'kefi@gmail.com',
+    age: 15
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf8'),
+    lastName: 'Emilie',
+    firstName: 'Brouahge',
+    email: 'emilie.b@gmail.com',
+    age: 40
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf9'),
+    lastName: 'Alexah',
+    firstName: 'Brown',
+    age: 4
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdfa'),
+    lastName: 'ahDenzel',
+    firstName: 'Washington',
+    age: 3
+  }
+]
+contact> db.contactlist.updateOne({_id: ObjectId('665775cc0a84b734a2cdcdf7')},{$set:{firstname:Anis}})
+ReferenceError: Anis is not defined
+contact> db.contactlist.updateOne({_id: ObjectId('665775cc0a84b734a2cdcdf7')},{$set:{firstname:'Anis'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+contact> db.contactlist.find()
+[
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf6'),
+    lastName: 'Ben',
+    firstName: 'Morisah',
+    email: 'ben@gmail.com',
+    age: 26
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf7'),
+    lastName: 'Kefi',
+    firstName: 'Seif',
+    email: 'kefi@gmail.com',
+    age: 15,
+    firstname: 'Anis'
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf8'),
+    lastName: 'Emilie',
+    firstName: 'Brouahge',
+    email: 'emilie.b@gmail.com',
+    age: 40
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf9'),
+    lastName: 'Alexah',
+    firstName: 'Brown',
+    age: 4
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdfa'),
+    lastName: 'ahDenzel',
+    firstName: 'Washington',
+    age: 3
+  }
+]
+contact> db.contactlist.DeleteMany({age:{$lt:5}})
+TypeError: db.contactlist.DeleteMany is not a function
+contact> db.contactlist.deleteMany({age:{$lt:5}})
+{ acknowledged: true, deletedCount: 2 }
+contact> db.contactlist.find()
+[
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf6'),
+    lastName: 'Ben',
+    firstName: 'Morisah',
+    email: 'ben@gmail.com',
+    age: 26
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf7'),
+    lastName: 'Kefi',
+    firstName: 'Seif',
+    email: 'kefi@gmail.com',
+    age: 15,
+    firstname: 'Anis'
+  },
+  {
+    _id: ObjectId('665775cc0a84b734a2cdcdf8'),
+    lastName: 'Emilie',
+    firstName: 'Brouahge',
+    email: 'emilie.b@gmail.com',
+    age: 40
+  }
+]
